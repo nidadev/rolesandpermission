@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Session;
 
 class PermissionController extends Controller
 {
@@ -54,7 +55,7 @@ class PermissionController extends Controller
         ]);
         if($validator->fails())
         {
-            return redirect()->route('permissions.edit')->withInput()->withErrors($validator);
+            return redirect()->route('permissions.edit', $id)->withInput()->withErrors($validator);
         }
         $permission = Permission::findOrFail($id);
         $permission->name = $request->name;
@@ -63,8 +64,29 @@ class PermissionController extends Controller
         return redirect()->route('permissions.index')->withInput()->with('success','Successfully updated');
     } 
 
-    public function delete()
+    public function delete(Request $request)
     {
-        return view('');
+        $id = $request->id;
+        //dd($id);
+        $permission = Permission::find($id);
+        if($permission == null)
+        {
+            session()->flash('error','Permission not found');
+            return response()->json(
+                [
+                    'status' => false
+                ]
+                );
+            }
+                $permission->delete();
+                session()->flash('success','Permission deleted successfully');
+                //return redirect()->route('permissions.index')->withInput()->with('success','Successfully deleted');
+
+                return response()->json(
+                    [
+                        'status' => true
+                    ]
+                    );
+
     }
 }

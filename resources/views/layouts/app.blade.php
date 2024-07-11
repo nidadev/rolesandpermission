@@ -33,4 +33,8 @@
             </main>
         </div>
     </body>
+    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
+    @isset($script)
+                {{$script}}
+            @endisset
 </html>

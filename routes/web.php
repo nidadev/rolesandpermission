@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
     Route::get('/permissions/{id}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
     Route::post('/permissions/{id}/edit', [PermissionController::class, 'update'])->name('permissions.update');
+    Route::delete('/permissions', [PermissionController::class, 'delete'])->name('permissions.delete');
 
 
 });
