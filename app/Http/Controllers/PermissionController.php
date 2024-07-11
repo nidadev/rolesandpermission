@@ -11,7 +11,7 @@ class PermissionController extends Controller
     //
     public function index()
     {
-        $permissions = Permission::orderBy('created_at','DESC')->paginate(10);
+        $permissions = Permission::orderBy('created_at','DESC')->paginate(2);
         return view('permissions.list',[
             'permissions' => $permissions
         ]);
@@ -39,14 +39,28 @@ class PermissionController extends Controller
         
         return redirect()->route('permissions.index')->withInput()->with('success','successfully added permission');  
       }
-    public function edit()
+    public function edit($id)
     {
-        return view('');
+        $permission = Permission::findOrFail($id);
+        return view('permissions.edit',[
+            'permission' => $permission
+        ]);
     }
 
-    public function update()
+    public function update($id, Request $request)
     {
-        return view('');
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|min:3|unique:permissions,name,'.$id.',id',
+        ]);
+        if($validator->fails())
+        {
+            return redirect()->route('permissions.edit')->withInput()->withErrors($validator);
+        }
+        $permission = Permission::findOrFail($id);
+        $permission->name = $request->name;
+
+        $permission->save();
+        return redirect()->route('permissions.index')->withInput()->with('success','Successfully updated');
     } 
 
     public function delete()

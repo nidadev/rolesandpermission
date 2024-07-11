@@ -27,7 +27,7 @@
                             <td>{{ $permission->id}}</td>
                             <td>{{ $permission->name}}</td>
                             <td> {{ \Carbon\Carbon::parse($permission->created_at)->format('d M, Y') }}</td>
-                            <td><a href="">Edit</a></td>
+                            <td><a href="{{route('permissions.edit',$permission->id)}}">Edit</a></td>
                             <td><a href="">Delete</a></td>
 
                         </tr>
@@ -36,6 +36,7 @@
                        
                     </tbody>
                   </table>
+                  {{ $permissions->links()}}
                 </div>
             </div>
         </div>
