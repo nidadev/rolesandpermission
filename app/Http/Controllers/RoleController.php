@@ -12,7 +12,7 @@ class RoleController extends Controller
     //
     public function index()
     {
-
+return view('role.list');
     }
     public function create()
     {
@@ -25,19 +25,24 @@ class RoleController extends Controller
     {
          //dd($request);
          $validator = Validator::make($request->all(),[
-            'name' => 'required|min:3|unique:permissions',
+            'name' => 'required|min:3|unique:roles',
         ]);
         if($validator->fails())
         {
             return redirect()->route('role.create')->withInput()->withErrors($validator);
         }
 
-        /*$permission = new Permission();
-        $permission->name = $request->name;
-        $permission->save();*/
-        Role::create(['name' => $request->name]);
+        $role = Role::create(['name' => $request->name]);
+        //dd($request->permission);
+        if(!empty($request->permission))
+        {
+            foreach($request->permission as $name)
+            {
+                $role->givePermissionTo($name);
+            }
+        }
         
-        return redirect()->route('role.index')->withInput()->with('success','successfully added permission');  
+        return redirect()->route('role.index')->withInput()->with('success','successfully added role');  
   
 
     }

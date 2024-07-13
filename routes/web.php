@@ -4,9 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 
-
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Contracts\Role;
 
 Route::get('/', function () {
     return view('welcome');
