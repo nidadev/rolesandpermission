@@ -27,7 +27,7 @@
                             <td>{{ $permission->id}}</td>
                             <td>{{ $permission->name}}</td>
                             <td> {{ \Carbon\Carbon::parse($permission->created_at)->format('d M, Y') }}</td>
-                            <td><a href="{{route('permissions.edit',$permission->id)}}">Edit</a></td>
+                            <td class=""><a href="{{route('permissions.edit',$permission->id)}}" class="bg-current text-red-600 p-2">Edit</a></td>
                             <td><a href="javascript:void(0);" onclick="deletePermission('{{ $permission->id }}')">Delete</a></td>
 
                         </tr>
